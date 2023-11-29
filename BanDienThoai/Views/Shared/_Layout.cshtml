@@ -50,6 +50,16 @@
         .p {
             margin-bottom: 0;
         }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
@@ -168,12 +178,12 @@
             </div>
         </div>
     </header>
-    <section>
+    <main>
         <div class="container">
             @RenderBody()
 
         </div>
-    </section>
+    </main>
 
     <footer style="background-color:#F0F2F5">
         <div class="container">
