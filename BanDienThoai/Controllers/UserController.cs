@@ -325,6 +325,10 @@ namespace BanDienThoai.Controllers
             GioHang g = LayGioHang();
             Item i = g.dsSP.FirstOrDefault(t => t.DetailPhoneID == id);
             g.Xoa(i);
+            if(g.SLMatHang() == 0)
+            {
+                g = null;
+            }
             LuuGioHang(g);
             return RedirectToAction("XemGioHang");
         }
@@ -332,6 +336,7 @@ namespace BanDienThoai.Controllers
         {
             GioHang g = LayGioHang();
             g.dsSP.Clear();
+            g = null;
             LuuGioHang(g);
             return RedirectToAction("XemGioHang");
         }
@@ -339,8 +344,8 @@ namespace BanDienThoai.Controllers
         public ActionResult XemGioHang()
         {
             GioHang g = LayGioHang();
-            List<Item> dsTour = g.dsSP;
-            return View(dsTour);
+            List<Item> ds = g.dsSP;
+            return View(ds);
         }
 
 
