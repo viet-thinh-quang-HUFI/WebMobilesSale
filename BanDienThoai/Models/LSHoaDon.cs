@@ -14,8 +14,7 @@ namespace BanDienThoai.Models
         public string Ward { get; set; }
         public string District { get; set; }
         public string City { get; set; }
-        public int? Total { get; set; }
-
+        public long? Total { get; set; }
         public bool? State { get; set; }
         public bool? Payment { get; set; }
     }
