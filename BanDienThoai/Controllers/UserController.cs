@@ -37,7 +37,7 @@ namespace BanDienThoai.Controllers
             {
                 a = (from phone in database.PHONEs
                      join detailsPhone in database.DETAILSPHONEs on phone.PhoneID equals detailsPhone.PhoneID
-                     where detailsPhone.Price != 0 && phone.PhoneName.Contains(name)
+                     where detailsPhone.Price != 0 && phone.PhoneName.Contains(name.TrimStart())
                      group new { phone, detailsPhone } by new { phone.PhoneID, phone.PhoneName, phone.MainImage } into grp
                      select new HTSP
                   {
@@ -69,6 +69,10 @@ namespace BanDienThoai.Controllers
                      Img = grp.Key.MainImage,
                      Pri = grp.Min(p => p.detailsPhone.Price)
                  }).ToList();
+            if(a.Count == 0)
+            {
+                a = null;
+            }    
             return View("Index", a);
         }
         public ActionResult CTPhone(string maSP)
@@ -382,6 +386,7 @@ namespace BanDienThoai.Controllers
             {
                 InsertDetailsBill(billID, ds[i].DetailPhoneID, ds[i].Quantity, ad, httt);
             }
+            Session["gh"] = null;
             return RedirectToAction("Index");
         }
         private string connectionString = "Data Source=DESKTOP-U2I3TCB\\ASUS;Initial Catalog=SalesPhoneManagement;Integrated Security=True";
