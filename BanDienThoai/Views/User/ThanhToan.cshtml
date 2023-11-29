@@ -60,37 +60,40 @@
             <label for="email">Email:</label>
             <p>@kh.Email</p>
         </div>
-        <select id="addressDropdown" name="addressDropdown">
+        <div class="form-group">
+            <label>Địa chỉ:</label>
+            <select id="addressDropdown" name="addressDropdown">
+                @if (ad != null)
+                {
+                    foreach (var address in ad)
+                    {
+                        <option value="@address.AddressOfCustomerID">
+                            @address.AparmentNo, @address.Street, @address.Ward, @address.District, @address.City
+                        </option>
+                    }
+                }
+                else
+                {
+                    <option value="" disabled selected>Không có địa chỉ</option>
+                }
+            </select>
+            <div class="form-group">
+                <label for="paymentMethod">Phương Thức Thanh Toán:</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="1">Thẻ Tín Dụng</option>
+                    <option value="0">COD</option>
+                </select>
+            </div>
+        </div>
             @if (ad != null)
             {
-                foreach (var address in ad)
-                {
-                    <option value="@address.AddressOfCustomerID">
-                        @address.AparmentNo, @address.Street, @address.Ward, @address.District, @address.City
-                    </option>
-                }
+                <button type="submit">Xác Nhận Thanh Toán</button>
             }
             else
             {
-                <option value="" disabled selected>Không có địa chỉ</option>
+                <button><a href="/User/ThemDiaChi">Thêm địa chỉ</a></button>
+
             }
-        </select>
-        <div class="form-group">
-            <label for="paymentMethod">Phương Thức Thanh Toán:</label>
-            <select id="paymentMethod" name="paymentMethod" required>
-                <option value="1">Thẻ Tín Dụng</option>
-                <option value="0">COD</option>
-            </select>
-        </div>
-        @if (ad != null)
-        {
-            <button type="submit">Xác Nhận Thanh Toán</button>
-        }
-        else
-        {
-            <button><a href="/User/ThemDiaChi">Thêm địa chỉ</a></button>
-            
-        }
 
     </form>
 </div>
