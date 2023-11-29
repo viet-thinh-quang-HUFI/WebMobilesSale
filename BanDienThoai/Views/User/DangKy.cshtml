@@ -69,15 +69,17 @@
         button:hover {
             opacity: 0.8;
         }
+
     .noti {
         color: #be1e2d;
     }
 </style>
 <div>
-    <h2>Đăng ký</h2>
+   
 
     <form action="@Url.Action("DangKy", "User")" method="post" onsubmit="return validateForm()">
         @Html.AntiForgeryToken()
+        <h2>Đăng ký</h2>
         <div>
             <label for="Email">Email:</label>
             <input type="text" id="Email" name="Email" />
@@ -111,6 +113,10 @@
         var password = document.getElementById("Password").value;
         var phoneNo = document.getElementById("PhoneNo").value;
 
+        if (customerName.trim() === "" || password.trim() === "") {
+            alert("Vui lòng điền đầy đủ thông tin.");
+            return false;
+        }
         var emailPattern = /^\w+@@[a-zA-Z_]+\.[a-zA-Z]{2,3}$/;
         if (!email.match(emailPattern)) {
             alert("Email không hợp lệ. Vui lòng kiểm tra lại.");
@@ -121,8 +127,9 @@
             alert("Vui lòng nhập số điện thoại hợp lệ.");
             return false;
         }
-        if (customerName.trim() === "" || password.trim() === "") {
-            alert("Vui lòng điền đầy đủ thông tin.");
+        var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@@$!%*#?&])[A-Za-z\d@@$!%*#?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            alert('Mật khẩu không đạt định dạng yêu cầu. Mật khẩu cần ít nhất 8 ký tự, bao gồm chữ cái, số và ký tự đặc biệt.');
             return false;
         }
         return true;

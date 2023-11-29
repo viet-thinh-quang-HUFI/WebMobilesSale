@@ -2,7 +2,6 @@
     ViewBag.Title = "DangNhap";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <style>
     form {
         max-width: 400px;
@@ -69,24 +68,27 @@
             opacity: 0.8;
         }
 
+    .noti {
+        color: #be1e2d;
+    }
 </style>
 <div>
-    <h2>Đăng nhập</h2>
-
     <form action="/User/DangNhap" method="post" onsubmit="return validateForm()">
         <div class="container">
-            <label for="uname"><b>Email</b></label>
-            <input type="text" id="txtMail" name="txtMail" placeholder="Email" />
-            <label for="psw"><b>Mật khẩu</b></label>
-            <input type="password" id="txtPW" name="txtPW" placeholder="Mật khẩu" />
+            <h2>Đăng nhập</h2>
+            <label for="txtMail"><b>Email</b></label>
+            <input type="text" id="txtMail" name="txtMail" placeholder="Email" required />
+
+            <label for="txtPW"><b>Mật khẩu</b></label>
+            <input type="password" id="txtPW" name="txtPW" placeholder="Mật khẩu" required />
+            <span class="toggle-password" onclick="togglePassword()">Hiện mật khẩu</span>
 
             <button type="submit">Login</button>
         </div>
 
-        @*<div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot <a href="#">password?</a></span>
-            </div>*@
+        <div class="container">
+            <span class="psw"><a href="#">Forgot password?</a></span>
+        </div>
     </form>
 </div>
 <script>
@@ -96,21 +98,33 @@
 
         if (email.trim() === '') {
             alert('Vui lòng nhập địa chỉ email.');
-            return false; 
+            return false;
         }
 
         var emailRegex = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (!emailRegex.test(email)) {
             alert('Email không hợp lệ.');
-            return false; 
+            return false;
         }
 
         if (password.trim() === '') {
             alert('Vui lòng nhập mật khẩu.');
-            return false; 
+            return false;
         }
-
-        return true; 
+        var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@@$!%*#?&])[A-Za-z\d@@$!%*#?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            alert('Mật khẩu không đạt định dạng yêu cầu. Mật khẩu cần ít nhất 8 ký tự, bao gồm chữ cái, số và ký tự đặc biệt.');
+            return false;
+        }
+        return true;
+    }
+    function togglePassword() {
+        var passwordInput = document.getElementById("txtPW");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
     }
 </script>
     

@@ -49,25 +49,33 @@
         </div>
     </div>
     @Html.Action("dsHang", "User")
-    <div class="row">
-         @foreach (var item in Model) 
-         {
-             <div class="col-3">
-                 <a class="lienket" href="/User/CTPhone/?maSP=@item.Id">
-                     <div class="card text-center">
-                         <img class="card-img" src="@item.Img" alt="Avatar">
-                         <div class="container">
-                             <h5><b>@item.Name</b></h5>
-                             @{
-                             int price = item.Pri;
-                             string formattedPrice = price.ToString("N0");
-                             }
-                             <h5>Giá chỉ: @formattedPrice</h5>
-                         </div>
-                     </div>
-                 </a>
+<div class="row">
+    @{ if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <div class="col-3">
+                <a class="lienket" href="/User/CTPhone/?maSP=@item.Id">
+                    <div class="card text-center">
+                        <img class="card-img" src="@item.Img" alt="Avatar">
+                        <div class="container">
+                            <h5><b>@item.Name</b></h5>
+                            @{
+                                int price = item.Pri;
+                                string formattedPrice = price.ToString("N0");
+                            }
+                            <h5>Giá chỉ: @formattedPrice</h5>
+                        </div>
+                    </div>
+                </a>
             </div>
-        }
-    </div>
+             }
+       }
+       else
+       {
+           <img src="https://png.pngtree.com/png-vector/20190828/ourlarge/pngtree-search-icon-vector-design-png-image_1707171.jpg" width="100px"/>
+       }
+     }
+</div>
 </div>
 
