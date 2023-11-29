@@ -400,7 +400,6 @@ namespace BanDienThoai.Controllers
             {
                 InsertDetailsBill(billID, ds[i].DetailPhoneID, ds[i].Quantity, ad, httt);
             }
-
             return RedirectToAction("Index");
         }
         private string connectionString = "Data Source=DESKTOP-U2I3TCB\\ASUS;Initial Catalog=SalesPhoneManagement;Integrated Security=True";
@@ -409,7 +408,7 @@ namespace BanDienThoai.Controllers
             using (DataContext context = new DataContext(connectionString))
             {
                 context.ExecuteCommand("EXEC [dbo].[PROC_INSERT_DETAILS_BILL] {0}, {1}, {2}, {3}, {4}",
-                    billId, detailsPhoneId, quantityPurchased, addressCustomerId, paymentMethod ? 1 : 0);
+                    billId, detailsPhoneId, quantityPurchased, addressCustomerId, paymentMethod ? 0 : 1);
             }
         }
     
@@ -453,10 +452,30 @@ namespace BanDienThoai.Controllers
                             BillID = bill.BillID,
                             DateTime = bill.Datetimestamp,
                             State = bill.State,
-                            Payment = bill.Payment
+                            Payment = bill.Payment,
+                            Total = bill.Total
                         }).ToList();
             return View("LSMuaHang", query);
         }
-
+        public ActionResult CTHoaDon(string billID)
+        {
+            List<CTHoaDon> a = (from detailsBill in database.DETAILSBILLs
+                                join detailsPhone in database.DETAILSPHONEs on detailsBill.DetailsPhoneID equals detailsPhone.DetailsPhoneID
+                                join phone in database.PHONEs on detailsPhone.PhoneID equals phone.PhoneID
+                                join color in database.COLORs on detailsPhone.ColorID equals color.ColorID
+                                join cap in database.CAPACITies on detailsPhone.CapacityID equals cap.CapacityID
+                                where detailsBill.BillID == billID
+                                select new CTHoaDon
+                                {
+                                    DetailImage = detailsPhone.DetailImage,
+                                    PhoneName = phone.PhoneName,
+                                    Price = detailsPhone.Price,
+                                    QuantityPurchased = detailsBill.QuantityPurchased,
+                                    ColorName = color.ColorName,
+                                    Capacity = cap.Capacity1,
+                                    Unit = cap.Unit
+                                }).ToList();
+            return View("CTHoaDon", a);
+        }
     }
 }

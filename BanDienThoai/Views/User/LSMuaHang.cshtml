@@ -44,10 +44,9 @@
     <table>
         <thead>
             <tr>
-
                 <th>Mã Hóa Đơn</th>
                 <th>Địa chỉ</th>
-                <th>Thời gian</th>
+                <th>Giá</th>
                 <th>Trạng thái</th>
                 <th>Thanh toán</th>
             </tr>
@@ -56,9 +55,9 @@
             @foreach (var hoaDon in Model)
             {
                 <tr>
-                    <td>@hoaDon.BillID</td>
+                    <td><a href="/User/CTHoaDon/?billID=@hoaDon.BillID">@hoaDon.BillID</a></td>
                     <td>@hoaDon.AparmentNo, @hoaDon.Street, @hoaDon.Ward, @hoaDon.District, @hoaDon.City</td>
-                    <td>@hoaDon.DateTime</td>
+                    <td>@hoaDon.Total</td>
                     <td>@hoaDon.State</td>
                     <td>@hoaDon.Payment</td>
                 </tr>

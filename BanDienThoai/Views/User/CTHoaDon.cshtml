@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "CTHoaDon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<BanDienThoai.Models.CTHoaDon>
+<div>
+    <h2>Thông tin chi tiết hóa đơn</h2>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Điện thoại</th>
+                <th>Giá</th>
+                <th>Số lượng mua</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img src="@item.DetailImage" width="100px" /></td>
+                    <td>@item.PhoneName - @item.Capacity@item.Unit - @item.ColorName</td>
+                    <td>@item.Price</td>
+                    <td>@item.QuantityPurchased</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
