@@ -1,0 +1,22 @@
+﻿@using BanDienThoai.Models
+@model List<BRAND>
+<style>
+    .danger {
+        color: #be1e2d;
+    }
+
+        .danger:hover {
+            background: #be1e2d;
+            color: white;
+        }
+</style>
+<div>
+    <div class="row">
+        @foreach (var i in Model)
+        {
+            <div class="col">
+               <a href="/User/Hang/?maHang=@i.BrandID"><button class="btn danger"><b>@i.BrandName</b></button></a> 
+            </div>
+        }
+    </div>
+</div>

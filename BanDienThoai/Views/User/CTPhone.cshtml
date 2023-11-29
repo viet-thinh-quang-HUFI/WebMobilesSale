@@ -1,0 +1,308 @@
+﻿@{
+    ViewBag.Title = "Phone";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = ViewBag.Phone;
+    var bl = ViewBag.Comment;
+}
+@using BanDienThoai.Models
+
+<style>
+    .img {
+        height: 500px;
+        object-fit: contain;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    label {
+        position: relative;
+        color: #be1e2d;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        border: 3px solid #be1e2d;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+        label:before {
+            content: "";
+            height: 0;
+            width: 0;
+            border: none;
+            background-color: none;
+        }
+
+    input[type="radio"]:checked + label:before {
+        content: "";
+        height: 0;
+        width: 0;
+        border: none;
+        background-color: none;
+    }
+
+    input[type="radio"]:checked + label {
+        background-color: #be1e2d;
+        color: #ffffff;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    button {
+        background-color: #be1e2d;
+        position: relative;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        border: 3px solid #be1e2d;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+    .comment-form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+    .comment-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+<div>
+    <div class="row">
+        <div class="col-6">
+            <div id="imgContainer">
+                <center>
+                    <img class="img" src="@i.MainImage" />
+                </center>
+            </div>
+        </div>
+        <div class="col-6">
+            <form action="/User/XL_ChonMua" method="post" onsubmit="return validateForm()">
+                <div><h2>@i.PhoneName</h2></div>
+
+                <input type="radio" name="phoneid" value="@i.PhoneID" checked />
+
+                <h3>Dung lượng</h3>
+                @foreach (var dl in ViewBag.ListDL)
+                {
+                    <input type="radio" name="capacityid" value="@dl.CapacityID" id="@dl.CapacityID" onchange="loadColors()" />
+                    <label for="@dl.CapacityID">@dl.Capacity @dl.Unit</label>
+                }
+
+                <h3>Màu sắc</h3>
+                <div id="colorContainer"></div>
+                <div id="giaContainer">
+                    <div>
+                        <h2>
+                            @{
+                                int price = i.pri;
+                                string formattedPrice = price.ToString("N0");
+                            }
+                            Giá tiền: @formattedPrice
+                        </h2>
+                    </div>
+                </div>
+                <button type="submit" class="danger">Mua ngay</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <h3>Thông số kỹ thuật</h3>
+        <table>
+            <tr>
+                <th>Tên sản phẩm:</th>
+                <td>@i.PhoneName</td>
+            </tr>
+            <tr>
+                <th>Công nghệ màn hình:</th>
+                <td>@i.ScreenTechnology</td>
+            </tr>
+            <tr>
+                <th>Độ phân giải:</th>
+                <td>@i.PhysicalHeight x @i.PhysicalWidth</td>
+            </tr>
+            <tr>
+                <th>Kích thước màn hình:</th>
+                <td>@i.ScreenDiagonal</td>
+            </tr>
+            <tr>
+                <th>Chip xử lý (CPU):</th>
+                <td>@i.Chip</td>
+            </tr>
+            <tr>
+                <th>Hệ điều hành:</th>
+                <td>@i.OperatingSystem</td>
+            </tr>
+            <tr>
+                <th>Sim:</th>
+                <td>@i.Sim</td>
+            </tr>
+            <tr>
+                <th>Wifi:</th>
+                <td>@i.Wifi</td>
+            </tr>
+            <tr>
+                <th>Bluetooth:</th>
+                <td>@i.Bluetooth</td>
+            </tr>
+            <tr>
+                <th>Dung lượng pin:</th>
+                <td>@i.BatteryCapacity</td>
+            </tr>
+            <tr>
+                <th>Loại pin:</th>
+                <td>@i.TypeOfPin</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <h3>Bình luận</h3>
+
+        <div>
+            @using (Html.BeginForm("AddComment", "User", FormMethod.Post))
+            {
+                <input type="radio" name="phoneid" value="@i.PhoneID" checked />
+                <div class="row">
+                    <div class="col-7">
+                        <div class="form-group">
+                            <p>Nội dung bình luận:</p>
+                            <textarea id="Body" name="Body" rows="9" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <p>Tên:</p>
+                            <input type="text" id="Name" name="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <p>Số điện thoại:</p>
+                            <input type="text" id="Phone" name="Phone" required>
+                        </div>
+                        <button type="submit">Gửi Bình Luận</button>
+                    </div>
+                </div>
+            }
+        </div>
+        @foreach (var comment in bl)
+        {
+
+            <div>
+                <p>Tên: @comment.Name - @comment.Datetimestamp</p>
+                <p>Nội dung: @comment.Body</p>
+                <p>-----------------------------------------------------</p>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function loadColors() {
+        var storageId = document.querySelector('input[name="capacityid"]:checked').value;
+        var phoneId = document.querySelector('input[name="phoneid"]:checked').value;
+        var colorContainer = document.getElementById("colorContainer");
+        colorContainer.innerHTML = phoneId + ' ' + storageId;
+        var url = '@Url.Action("LoadColors", "User")';
+
+        axios.get(url + '?maDL=' + storageId + '&maSP=' + phoneId)
+          .then(function (response) {
+              colorContainer.innerHTML = response.data;
+              // Xác định màu sắc từ dữ liệu JSON trả về
+              var colors = response.data;
+              // Tạo các radio button và nhãn tương ứng từ danh sách màu sắc
+
+              if (colors != null) {
+                  var colorsHtml = '<div>';
+                  for (var i = 0; i < colors.length; i++) {
+                      var color = colors[i];
+                      colorsHtml += '<input type="radio" name="colorid" value="' + color.ColorID + '" id="' + color.ColorID + '" onchange="loadGia()"/>';
+                      colorsHtml += '<label for="' + color.ColorID + '">' + color.ColorName + '</label>';
+                  }
+                  colorsHtml += '</div>';
+                  colorContainer.innerHTML = colorsHtml;
+              }
+          });
+    }
+    function loadGia() {
+        var storageId = document.querySelector('input[name="capacityid"]:checked').value;
+        var phoneId = document.querySelector('input[name="phoneid"]:checked').value;
+        var colorId = document.querySelector('input[name="colorid"]:checked').value;
+        var giaContainer = document.getElementById("giaContainer");
+        var imgContainer = document.getElementById("imgContainer");
+        var url = '@Url.Action("LoadPri", "User")';
+
+        axios.get(url + '?maDL=' + storageId + '&maSP=' + phoneId + '&maMau=' + colorId)
+          .then(function (response) {
+              var pri = response.data;
+
+              if (pri != null) {
+                  imgContainer.innerHTML = '<center> <img class="img" src="' + pri.Img + '" /> </center>'
+                  giaContainer.innerHTML = '<div> <h2>Giá tiền:' + pri.Pri + '</h2></div>';
+              }
+          });
+    }
+    function validateForm() {
+        var selectedCapacity = document.querySelector('input[name="capacityid"]:checked');
+        var selectedColor = document.querySelector('input[name="colorid"]:checked');
+
+        if (selectedCapacity === null) {
+            alert('Vui lòng chọn dung lượng.');
+            return false;
+        }
+
+        if (selectedColor === null) {
+            alert('Vui lòng chọn màu.');
+            return false;
+        }
+        return true;
+    }
+</script>
+
+

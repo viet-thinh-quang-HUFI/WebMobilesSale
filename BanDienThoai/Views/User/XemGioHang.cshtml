@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "XemGioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<BanDienThoai.Models.Item>
+@using BanDienThoai.Models;
+
+<h2 class="text-center mt-3">Xem Giỏ Hàng</h2>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Hình ảnh
+            </th>
+            <th>
+                Tên
+            </th>
+            <th>
+                Ảnh số lượng
+            </th>
+            <th>
+                Giá tiền
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <body>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    <img src="@item.Img" width="100px" />
+                </th>
+                <th>
+                    @item.PhoneName - @item.Capacity@item.Unit - @item.ColorName
+                </th>
+                <th>
+                    @item.Quantity
+                </th>
+                <td>
+                    @item.Pri
+                </td>
+                <td>
+                    @item.ThanhTien
+                </td>
+                <td>
+                    <a href="/User/Xoa/@item.DetailPhoneID"> Xóa </a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                @Html.ActionLink("XoaTatCa", "XoaAll")
+            </td>
+            <td>
+                Tổng số lượng: @{
+                    GioHang cc = (GioHang)Session["gh"];
+                    if (cc == null)
+                    {
+                        <span>0</span>
+                    }
+                    else
+                    {
+                        <span>@cc.TongSL()</span>
+                    }
+                }
+            </td>
+            <td>
+                Tổng tiền: @{
+                    GioHang gio = (GioHang)Session["gh"];
+                    if (gio == null)
+                    {
+                        <span>0</span>
+                    }
+                    else
+                    {
+                        <span>@gio.TongTien() VND </span>
+                    }
+                }
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <a href="/User/ThanhToan"><button>Thanh toán</button></a>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </body>
+</table>

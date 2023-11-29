@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "LSMuaHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<BanDienThoai.Models.LSHoaDon>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #fff;
+    }
+
+    td {
+        color: #333;
+    }
+</style>
+<div>
+    <h2>Danh sách Hóa Đơn</h2>
+    <table>
+        <thead>
+            <tr>
+
+                <th>Mã Hóa Đơn</th>
+                <th>Địa chỉ</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+                <th>Thanh toán</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hoaDon in Model)
+            {
+                <tr>
+                    <td>@hoaDon.BillID</td>
+                    <td>@hoaDon.AparmentNo, @hoaDon.Street, @hoaDon.Ward, @hoaDon.District, @hoaDon.City</td>
+                    <td>@hoaDon.DateTime</td>
+                    <td>@hoaDon.State</td>
+                    <td>@hoaDon.Payment</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

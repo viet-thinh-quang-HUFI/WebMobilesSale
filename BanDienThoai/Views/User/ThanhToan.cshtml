@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "ThanhToan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var kh = ViewBag.KH;
+    var ad = ViewBag.Addres;
+}
+<style>
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+    button {
+        background-color: #be1e2d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        button:hover {
+            opacity: 0.8;
+        }
+        
+</style>
+
+<div>
+    <form action="@Url.Action("ThanhToan", "User")" method="post">
+        <h2>Thông Tin Thanh Toán</h2>
+        <div class="form-group">
+            <label for="name">Họ và Tên:</label>
+            <p>@kh.CustomerName</p>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <p>@kh.Email</p>
+        </div>
+        <select id="addressDropdown" name="addressDropdown">
+            @if (ad != null)
+            {
+                foreach (var address in ad)
+                {
+                    <option value="@address.AddressOfCustomerID">
+                        @address.AparmentNo, @address.Street, @address.Ward, @address.District, @address.City
+                    </option>
+                }
+            }
+            else
+            {
+                <option value="" disabled selected>Không có địa chỉ</option>
+            }
+        </select>
+        <div class="form-group">
+            <label for="paymentMethod">Phương Thức Thanh Toán:</label>
+            <select id="paymentMethod" name="paymentMethod" required>
+                <option value="1">Thẻ Tín Dụng</option>
+                <option value="0">COD</option>
+            </select>
+        </div>
+        @if (ad != null)
+        {
+            <button type="submit">Xác Nhận Thanh Toán</button>
+        }
+        else
+        {
+            <button><a href="/User/ThemDiaChi">Thêm địa chỉ</a></button>
+            
+        }
+
+    </form>
+</div>

@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SalesPhoneManagement" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-U2I3TCB\ASUS;Initial Catalog=SalesPhoneManagement;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SalesPhoneManagementConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ADDRESSOFCUSTOMER" Member="ADDRESSOFCUSTOMERs">
+    <Type Name="ADDRESSOFCUSTOMER">
+      <Column Name="AddressOfCustomerID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AparmentNo" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Street" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Ward" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="District" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="ADDRESSOFCUSTOMER_BILL" Member="BILLs" ThisKey="AddressOfCustomerID" OtherKey="AddressOfCustomerID" Type="BILL" />
+      <Association Name="CUSTOMER_ADDRESSOFCUSTOMER" Member="CUSTOMER" ThisKey="Email" OtherKey="Email" Type="CUSTOMER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WAREHOUSERECEIPT" Member="WAREHOUSERECEIPTs">
+    <Type Name="WAREHOUSERECEIPT">
+      <Column Name="WarehouseReceiptID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Datetimestamp" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="Total" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="State" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EmployeeID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="SupplierID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="WAREHOUSERECEIPT_DETAILSWAREHOUSERECEIPT" Member="DETAILSWAREHOUSERECEIPTs" ThisKey="WarehouseReceiptID" OtherKey="WarehouseReceiptID" Type="DETAILSWAREHOUSERECEIPT" />
+      <Association Name="EMPLOYEE_WAREHOUSERECEIPT" Member="EMPLOYEE" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="EMPLOYEE" IsForeignKey="true" />
+      <Association Name="SUPPLIER_WAREHOUSERECEIPT" Member="SUPPLIER" ThisKey="SupplierID" OtherKey="SupplierID" Type="SUPPLIER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BILL" Member="BILLs">
+    <Type Name="BILL">
+      <Column Name="BillID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Datetimestamp" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="Total" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="State" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Payment" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AddressOfCustomerID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="BILL_DETAILSBILL" Member="DETAILSBILLs" ThisKey="BillID" OtherKey="BillID" Type="DETAILSBILL" />
+      <Association Name="ADDRESSOFCUSTOMER_BILL" Member="ADDRESSOFCUSTOMER" ThisKey="AddressOfCustomerID" OtherKey="AddressOfCustomerID" Type="ADDRESSOFCUSTOMER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BRAND" Member="BRANDs">
+    <Type Name="BRAND">
+      <Column Name="BrandID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BrandName" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="BRAND_PHONE" Member="PHONEs" ThisKey="BrandID" OtherKey="BrandID" Type="PHONE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAPACITY" Member="CAPACITies">
+    <Type Name="CAPACITY">
+      <Column Name="CapacityID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Capacity" Member="Capacity1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Unit" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="CAPACITY_DETAILSPHONE" Member="DETAILSPHONEs" ThisKey="CapacityID" OtherKey="CapacityID" Type="DETAILSPHONE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.COLOR" Member="COLORs">
+    <Type Name="COLOR">
+      <Column Name="ColorID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ColorName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="COLOR_DETAILSPHONE" Member="DETAILSPHONEs" ThisKey="ColorID" OtherKey="ColorID" Type="DETAILSPHONE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.COMMENT" Member="COMMENTs">
+    <Type Name="COMMENT">
+      <Column Name="CommentID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Body" Type="System.String" DbType="NVarChar(300) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNO" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Datetimestamp" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Association Name="COMMENT_RESPONECOMMENT" Member="RESPONECOMMENTs" ThisKey="CommentID" OtherKey="CommentID" Type="RESPONECOMMENT" />
+      <Association Name="PHONE_COMMENT" Member="PHONE" ThisKey="PhoneID" OtherKey="PhoneID" Type="PHONE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CUSTOMER" Member="CUSTOMERs">
+    <Type Name="CUSTOMER">
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CustomerName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="PhoneNO" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="CUSTOMER_ADDRESSOFCUSTOMER" Member="ADDRESSOFCUSTOMERs" ThisKey="Email" OtherKey="Email" Type="ADDRESSOFCUSTOMER" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DETAILSBILL" Member="DETAILSBILLs">
+    <Type Name="DETAILSBILL">
+      <Column Name="BillID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DetailsPhoneID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QuantityPurchased" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Star" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="BILL_DETAILSBILL" Member="BILL" ThisKey="BillID" OtherKey="BillID" Type="BILL" IsForeignKey="true" />
+      <Association Name="DETAILSPHONE_DETAILSBILL" Member="DETAILSPHONE" ThisKey="DetailsPhoneID" OtherKey="DetailsPhoneID" Type="DETAILSPHONE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DETAILSPHONE" Member="DETAILSPHONEs">
+    <Type Name="DETAILSPHONE">
+      <Column Name="DetailsPhoneID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PhoneID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ColorID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CapacityID" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DetailImage" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="DETAILSPHONE_DETAILSBILL" Member="DETAILSBILLs" ThisKey="DetailsPhoneID" OtherKey="DetailsPhoneID" Type="DETAILSBILL" />
+      <Association Name="DETAILSPHONE_DETAILSWAREHOUSERECEIPT" Member="DETAILSWAREHOUSERECEIPTs" ThisKey="DetailsPhoneID" OtherKey="DetailsPhoneID" Type="DETAILSWAREHOUSERECEIPT" />
+      <Association Name="CAPACITY_DETAILSPHONE" Member="CAPACITY" ThisKey="CapacityID" OtherKey="CapacityID" Type="CAPACITY" IsForeignKey="true" />
+      <Association Name="COLOR_DETAILSPHONE" Member="COLOR" ThisKey="ColorID" OtherKey="ColorID" Type="COLOR" IsForeignKey="true" />
+      <Association Name="PHONE_DETAILSPHONE" Member="PHONE" ThisKey="PhoneID" OtherKey="PhoneID" Type="PHONE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DETAILSWAREHOUSERECEIPT" Member="DETAILSWAREHOUSERECEIPTs">
+    <Type Name="DETAILSWAREHOUSERECEIPT">
+      <Column Name="WarehouseReceiptID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DetailsPhoneID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QuantityOdered" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="DETAILSPHONE_DETAILSWAREHOUSERECEIPT" Member="DETAILSPHONE" ThisKey="DetailsPhoneID" OtherKey="DetailsPhoneID" Type="DETAILSPHONE" IsForeignKey="true" />
+      <Association Name="WAREHOUSERECEIPT_DETAILSWAREHOUSERECEIPT" Member="WAREHOUSERECEIPT" ThisKey="WarehouseReceiptID" OtherKey="WarehouseReceiptID" Type="WAREHOUSERECEIPT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EMPLOYEE" Member="EMPLOYEEs">
+    <Type Name="EMPLOYEE">
+      <Column Name="EmployeeID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EmployeeName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Avatar" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ChucVu" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="EMPLOYEE_WAREHOUSERECEIPT" Member="WAREHOUSERECEIPTs" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="WAREHOUSERECEIPT" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PHONE" Member="PHONEs">
+    <Type Name="PHONE">
+      <Column Name="PhoneID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PhoneName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="MainImage" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ScreenTeachnology" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PhysicalWidth" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PhysicalHeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ScreenDiagonal" Type="System.Decimal" DbType="Decimal(5,1)" CanBeNull="true" />
+      <Column Name="Chip" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OperatingSystem" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Sim" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Wifi" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Bluetooth" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BatteryCapacity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TypeOfPin" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BrandID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="PHONE_COMMENT" Member="COMMENTs" ThisKey="PhoneID" OtherKey="PhoneID" Type="COMMENT" />
+      <Association Name="PHONE_DETAILSPHONE" Member="DETAILSPHONEs" ThisKey="PhoneID" OtherKey="PhoneID" Type="DETAILSPHONE" />
+      <Association Name="BRAND_PHONE" Member="BRAND" ThisKey="BrandID" OtherKey="BrandID" Type="BRAND" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RESPONECOMMENT" Member="RESPONECOMMENTs">
+    <Type Name="RESPONECOMMENT">
+      <Column Name="ResponeCommentID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Body" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Datetimestamp" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="CommentID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="COMMENT_RESPONECOMMENT" Member="COMMENT" ThisKey="CommentID" OtherKey="CommentID" Type="COMMENT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SUPPLIER" Member="SUPPLIERs">
+    <Type Name="SUPPLIER">
+      <Column Name="SupplierID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SupplierName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNO" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="SUPPLIER_WAREHOUSERECEIPT" Member="WAREHOUSERECEIPTs" ThisKey="SupplierID" OtherKey="SupplierID" Type="WAREHOUSERECEIPT" />
+    </Type>
+  </Table>
+</Database>

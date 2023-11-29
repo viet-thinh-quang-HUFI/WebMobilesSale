@@ -1,0 +1,131 @@
+﻿@model BanDienThoai.Models.CUSTOMER
+
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+    button {
+        background-color: #be1e2d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #be1e2d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        button:hover {
+            opacity: 0.8;
+        }
+    .noti {
+        color: #be1e2d;
+    }
+</style>
+<div>
+    <h2>Đăng ký</h2>
+
+    <form action="@Url.Action("DangKy", "User")" method="post" onsubmit="return validateForm()">
+        @Html.AntiForgeryToken()
+        <div>
+            <label for="Email">Email:</label>
+            <input type="text" id="Email" name="Email" />
+            <div class="noti">@Html.ValidationMessageFor(model => model.Email)</div>
+        </div>
+        <div>
+            <label for="CustomerName">Họ tên: </label>
+            <input type="text" id="CustomerName" name="CustomerName" />
+        </div>
+        <div>
+            <label for="PhoneNo">Số điện thoại:</label>
+            <input type="text" id="PhoneNo" name="PhoneNo" />
+        </div>
+        <div>
+            <label for="Password">Mật khẩu:</label>
+            <input type="password" id="Password" name="Password" />
+        </div>
+        <button type="submit">Đăng ký</button>
+    </form>
+
+    <div>
+        @Html.ActionLink("Quay lại DanhNhap", "DangNhap")
+    </div>
+</div>
+
+
+<script>
+    function validateForm() {
+        var email = document.getElementById("Email").value;
+        var customerName = document.getElementById("CustomerName").value;
+        var password = document.getElementById("Password").value;
+        var phoneNo = document.getElementById("PhoneNo").value;
+
+        var emailPattern = /^\w+@@[a-zA-Z_]+\.[a-zA-Z]{2,3}$/;
+        if (!email.match(emailPattern)) {
+            alert("Email không hợp lệ. Vui lòng kiểm tra lại.");
+            return false; 
+        }
+        var phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(phoneNo)) {
+            alert("Vui lòng nhập số điện thoại hợp lệ.");
+            return false;
+        }
+        if (customerName.trim() === "" || password.trim() === "") {
+            alert("Vui lòng điền đầy đủ thông tin.");
+            return false;
+        }
+        return true;
+    }
+</script>
+

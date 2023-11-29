@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "ThemDiaChi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+    button {
+        background-color: #be1e2d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        button:hover {
+            opacity: 0.8;
+        }
+</style>
+<div>
+    <h2>Thêm Địa Chỉ</h2>
+    @using (Html.BeginForm("ThemDiaChi", "User", FormMethod.Post, new { onsubmit = "return validateForm();" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label for="AparmentNo">Số Nhà/Chung Cư:</label>
+            <input type="text" id="AparmentNo" name="AparmentNo" />
+        </div>
+        <div>
+            <label for="Street">Đường:</label>
+            <input type="text" id="Street" name="Street" />
+        </div>
+        <div>
+            <label for="Ward">Phường/Xã:</label>
+            <input type="text" id="Ward" name="Ward" />
+        </div>
+        <div>
+            <label for="District">Quận/Huyện:</label>
+            <input type="text" id="District" name="District" />
+        </div>
+        <div>
+            <label for="City">Thành Phố:</label>
+            <input type="text" id="City" name="City" />
+        </div>
+
+        <button type="submit">Thêm Địa Chỉ</button>
+    }
+</div>
+<script>
+    function validateForm() {
+        var aparmentNo = document.getElementById('AparmentNo').value;
+        var street = document.getElementById('Street').value;
+        var ward = document.getElementById('Ward').value;
+        var district = document.getElementById('District').value;
+        var city = document.getElementById('City').value;
+
+        if (aparmentNo === '' || street === '' || ward === '' || district === '' || city === '' || email === '') {
+            alert('Vui lòng điền đầy đủ thông tin.');
+            return false;
+        }
+
+        return true;
+    }
+</script>

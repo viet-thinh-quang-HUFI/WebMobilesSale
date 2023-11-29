@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Thông tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var a = ViewBag.Cus;
+    var ad = ViewBag.Addres;
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #fff;
+    }
+
+    td {
+        color: #333;
+    }
+</style>
+
+<div>
+    <h2>Danh sách địa chỉ</h2>
+        <table>
+        <thead>
+            <tr>
+                <th>Địa chỉ</th>
+            </tr>
+            <tr>
+                <a href="/User/ThemDiaChi">Thêm địa chỉ</a>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var address in ad)
+            {
+                <tr>
+                    <td>@address.AparmentNo, @address.Street, @address.Ward, @address.District, @address.City</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
