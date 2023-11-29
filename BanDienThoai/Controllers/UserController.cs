@@ -331,32 +331,14 @@ namespace BanDienThoai.Controllers
             LuuGioHang(g);
             return RedirectToAction("XemGioHang");
         }
-        //[HttpPost]
-        //public ActionResult CapNhatGioHang(string id, FormCollection f)
-        //{
-        //    GioHang g = LayGioHang();
-        //    Item i = g.dsSP.SingleOrDefault(t => t.MaDD == id);
-        //    if (i != null)
-        //    {
-        //        i.SoLuongMua = int.Parse(f["txtSoluong"].ToString());
-        //    }
-        //    LuuGioHang(g);
-        //    return RedirectToAction("XemGioHang");
-        //}
+
         public ActionResult XemGioHang()
         {
             GioHang g = LayGioHang();
             List<Item> dsTour = g.dsSP;
             return View(dsTour);
         }
-        //[HttpPost]
-        //[ValidateInput(false)]
-        //public ActionResult XemGioHang(VE ve)
-        //{
-        //    database.VEs.InsertOnSubmit(ve.MaTour, ve.MaKH);
-        //    database.SubmitChanges();
-        //    return RedirectToAction("Index");
-        //}
+
 
         public ActionResult ThanhToan()
         {
