@@ -181,8 +181,40 @@
     <main>
         <div class="container">
             @RenderBody()
-
         </div>
+        <script>
+            let _protocol = document.location.protocol;
+            let _baseUrl = _protocol + '//livechat.fpt.ai/v35/src';
+
+            let prefixNameLiveChat = 'Bot tư vấn';
+            let objPreDefineLiveChat = {
+                appCode: 'ee727468080859c964bc2589a18b2185',
+                themes: '',
+                appName: prefixNameLiveChat ? prefixNameLiveChat : 'Live support',
+                thumb: '',
+                icon_bot: ''
+            },
+                appCodeHash = window.location.hash.substr(1);
+            if (appCodeHash.length == 32) {
+                objPreDefineLiveChat.appCode == appCodeHash;
+            }
+
+            let fpt_ai_livechat_script = document.createElement('script');
+            fpt_ai_livechat_script.id = 'fpt_ai_livechat_script';
+            fpt_ai_livechat_script.src = _baseUrl + '/static/fptai-livechat.js';
+            document.body.appendChild(fpt_ai_livechat_script);
+
+            let fpt_ai_livechat_stylesheet = document.createElement('link');
+            fpt_ai_livechat_stylesheet.id = 'fpt_ai_livechat_stylesheet';
+            fpt_ai_livechat_stylesheet.rel = 'stylesheet';
+            fpt_ai_livechat_stylesheet.href = _baseUrl + '/static/fptai-livechat.css';
+            document.body.appendChild(fpt_ai_livechat_stylesheet);
+
+            fpt_ai_livechat_script.onload = function () {
+                fpt_ai_render_chatbox(objPreDefineLiveChat, _baseUrl, 'livechat.fpt.ai:443').createElement;
+                console.log(e);
+            }
+        </script>
     </main>
 
     <footer style="background-color:#F0F2F5">
