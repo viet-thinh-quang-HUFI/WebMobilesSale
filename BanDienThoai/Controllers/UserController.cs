@@ -469,5 +469,38 @@ namespace BanDienThoai.Controllers
                                 }).ToList();
             return View("CTHoaDon", a);
         }
+        [HttpPost]
+        public ActionResult UpdateQuantity(string detailPhoneID, int quantity)
+        {
+            GioHang gio = (GioHang)Session["gh"];
+            var item = gio.Find(detailPhoneID);
+            if (item != null)
+            {
+                item.Quantity = quantity;
+            }
+            Session["gh"] = gio;
+            return Content("Quantity updated successfully");
+        }
+
+
+        [HttpGet]
+        public bool KiemTraSoLuongMua(string productId, int desiredQuantity)
+        {
+            try
+            {
+                DETAILSPHONE product = database.DETAILSPHONEs.FirstOrDefault(p => p.DetailsPhoneID == productId);
+                if (product != null && product.Quantity >= desiredQuantity)
+                {
+                    return true; 
+                }
+                return false;  
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error in KiemTraSoLuongMua: {ex.Message}");
+                return false;
+            }
+        }
+
     }
 }
