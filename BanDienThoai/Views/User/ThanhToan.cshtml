@@ -4,6 +4,7 @@
     var kh = ViewBag.KH;
     var ad = ViewBag.Addres;
 }
+
 <style>
     form {
         max-width: 400px;
@@ -17,21 +18,20 @@
         margin-bottom: 15px;
     }
 
-        .form-group label {
-            display: block;
-            font-weight: bold;
-        }
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
 
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
+    select, input[type="text"], input[type="email"], input[type="tel"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
 
     button {
         background-color: #be1e2d;
@@ -47,29 +47,9 @@
             opacity: 0.8;
         }
 
-    input[type=text], input[type=password] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
+    #stripePaymentForm {
+        display: none;
     }
-
-    button {
-        background-color: #be1e2d;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-    }
-
-    button:hover {
-        opacity: 0.8;
-    }
-        
 </style>
 
 <div>
@@ -84,7 +64,7 @@
             <p>@kh.Email</p>
         </div>
         <div class="form-group">
-            <label>Địa chỉ:</label>
+            <label for="addressDropdown">Địa chỉ:</label>
             <select id="addressDropdown" name="addressDropdown">
                 @if (ad != null)
                 {
@@ -100,22 +80,47 @@
                     <option value="" disabled selected>Không có địa chỉ</option>
                 }
             </select>
-            <div class="form-group">
-                <label for="paymentMethod">Phương Thức Thanh Toán:</label>
-                <select id="paymentMethod" name="paymentMethod" required>
-                    <option value="1">Thẻ Tín Dụng</option>
-                    <option value="0">COD</option>
-                </select>
-            </div>
         </div>
-            @if (ad != null)
-            {
-                <button type="submit">Xác Nhận Thanh Toán</button>
-            }
-            else
-            {
-                <a href="/User/ThemDiaChi">Thêm địa chỉ</a>
-            }
+        <div class="form-group">
+            <label for="paymentMethod">Phương Thức Thanh Toán:</label>
+            <select id="paymentMethod" name="paymentMethod" required onchange="togglePaymentForm()">
+                <option value="0">COD</option>
+                <option value="1">Thẻ Tín Dụng</option>
+            </select>
+        </div>
 
+        @if (ad != null)
+        {
+            <button type="submit">Xác Nhận Thanh Toán</button>
+        }
+        else
+        {
+            <a href="/User/ThemDiaChi">Thêm địa chỉ</a>
+        }
+    </form>
+    <form id="stripePaymentForm" action="/YourController/ThanhToan" method="post">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key=""
+                data-amount="@Model * 100"
+                data-name="Di Động Việt"
+                data-description="Thanh toán online"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-currency="VND">
+        </script>
+        <input type="hidden" name="totalAmount" value="@Model" />
     </form>
 </div>
+
+<script>
+    function togglePaymentForm() {
+        var paymentMethod = document.getElementById("paymentMethod").value;
+        var stripePaymentForm = document.getElementById("stripePaymentForm");
+
+        if (paymentMethod === "1") {
+            stripePaymentForm.style.display = "block";
+        } else {
+            stripePaymentForm.style.display = "none";
+        }
+    }
+</script>

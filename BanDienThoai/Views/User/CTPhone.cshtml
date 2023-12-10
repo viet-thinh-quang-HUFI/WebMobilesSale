@@ -254,9 +254,7 @@
         axios.get(url + '?maDL=' + storageId + '&maSP=' + phoneId)
           .then(function (response) {
               colorContainer.innerHTML = response.data;
-              // Xác định màu sắc từ dữ liệu JSON trả về
               var colors = response.data;
-              // Tạo các radio button và nhãn tương ứng từ danh sách màu sắc
 
               if (colors != null) {
                   var colorsHtml = '<div>';

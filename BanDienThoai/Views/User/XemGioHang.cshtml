@@ -6,6 +6,42 @@
 @using BanDienThoai.Models;
 
 <style>
+    input {
+        width: 50px;
+        text-align: center;
+    }
+
+    .quantity-input {
+        width: 50px;
+        text-align: center;
+    }
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    select, input[type="text"], input[type="email"], input[type="tel"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
     button {
         background-color: #be1e2d;
         color: white;
@@ -19,6 +55,7 @@
         button:hover {
             opacity: 0.8;
         }
+
 </style>
 
 <h2 class="text-center mt-3">Xem Giỏ Hàng</h2>
@@ -33,7 +70,7 @@
                 Tên
             </th>
             <th>
-                Ảnh số lượng
+                Số lượng
             </th>
             <th>
                 Giá tiền
@@ -55,7 +92,7 @@
                     @item.PhoneName - @item.Capacity@item.Unit - @item.ColorName
                 </th>
                 <th>
-                    @item.Quantity
+                    <input type="number" class="quantity-input" id="quantity_@item.DetailPhoneID" value="@item.Quantity" min="1" oninput="updateQuantity('@item.DetailPhoneID', this.value)" />
                 </th>
                 <td>
                     @item.Pri
@@ -64,7 +101,7 @@
                     @item.ThanhTien
                 </td>
                 <td>
-                    <a href="/User/Xoa/@item.DetailPhoneID"> Xóa </a>
+                    <a href="/User/Xoa/@item.DetailPhoneID">Xóa</a>
                 </td>
             </tr>
         }
@@ -117,9 +154,30 @@
                     {
                         <a href="/User/Index"><button>Thêm sản phẩm</button></a>
                     }
-               }
+                }
             <td></td>
             <td></td>
         </tr>
     </tbody>
 </table>
+
+<script>
+    function updateQuantity(detailPhoneID, value) {
+        value = Math.max(1, Math.floor(value));
+        document.getElementById('quantity_' + detailPhoneID).value = value;
+        sendUpdateQuantityRequest(detailPhoneID, value);
+    }
+
+    function sendUpdateQuantityRequest(detailPhoneID, quantity) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/User/UpdateQuantity', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        var data = 'detailPhoneID=' + encodeURIComponent(detailPhoneID) + '&quantity=' + encodeURIComponent(quantity);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.send(data);
+    }
+</script>
